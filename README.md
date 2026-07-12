@@ -31,6 +31,8 @@ Contact Information
 WhatsApp Booking Integration
 Smooth User Interface
 Fast Loading Website
+
+
 📁 Folder Structure
 WebDev-L1-LandingPage/
 │
@@ -38,6 +40,8 @@ WebDev-L1-LandingPage/
 ├── style.css
 ├── script.js
 └── README.md
+
+
 🌐 Live Demo
 
 Website:
@@ -77,6 +81,8 @@ Admin Dashboard
 Booking History
 User Authentication
 Email Notifications
+
+
 📄 License
 
 This project is created for educational and internship purposes.
