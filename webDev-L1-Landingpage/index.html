@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dr Washit - Premium Doorstep Car Wash & Detailing Services in Greater Noida. We bring showroom shine right to your home.">
+    <title>Dr. Washit | Premium Doorstep Car Wash & Detailing</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- ── CHATBOT + DOWNLOAD STYLES ── -->
+    <style>
+        /* Download Buttons */
+        .download-wrap {
+            margin-top: 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .download-label {
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.55);
+            text-transform: uppercase;
+        }
+        .download-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .store-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: transform .15s, opacity .15s;
+            min-width: 150px;
+        }
+        .store-btn:hover { transform: translateY(-2px); opacity: .9; }
+        .store-btn.play { 
+    background: #1a1a1a; 
+    color: #fff; 
+    border: 1px solid #444; 
+}
+        .store-btn.apple { background: #1a1a1a; color: #fff; border: 1px solid #444; }
+        .store-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+        .store-btn-text .top { font-size: 0.62rem; opacity: .65; display: block; }
+        .store-btn-text .bot { font-size: 0.88rem; font-weight: 700; display: block; }
+
+        /* Chatbot */
+        #chatbot { position: fixed; bottom: 24px; right: 24px; z-index: 9999; }
+        .chat-toggle {
+            width: 58px; height: 58px; border-radius: 50%;
+            background: #c9a84c; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: transform .2s;
+        }
+        .chat-toggle:hover { transform: scale(1.08); }
+        .chat-toggle svg { width: 26px; height: 26px; fill: #fff; }
+        .chat-badge {
+            position: absolute; top: -4px; right: -4px;
+            background: #e53935; color: #fff;
+            font-size: 0.65rem; font-weight: 700;
+            width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .chat-window {
+            display: none; position: absolute; bottom: 70px; right: 0;
+            width: 330px; background: #fff; border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+            overflow: hidden; flex-direction: column;
+        }
+        .chat-window.open { display: flex; }
+        .chat-header {
+            background: #1a3c5e; color: #fff;
+            padding: 14px 16px; display: flex; align-items: center; gap: 10px;
+        }
+        .chat-avatar {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: #c9a84c; color: #000;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1rem; flex-shrink: 0;
+        }
+        .chat-header h4 { font-size: 0.9rem; margin: 0; }
+        .chat-header p { font-size: 0.72rem; opacity: .7; margin: 0; }
+        .chat-msgs {
+            flex: 1; overflow-y: auto; padding: 14px;
+            display: flex; flex-direction: column; gap: 10px;
+            min-height: 200px; max-height: 280px;
+        }
+        .msg {
+            max-width: 88%; padding: 9px 13px;
+            font-size: 0.83rem; line-height: 1.55; border-radius: 12px;
+        }
+        .msg.bot { background: #f0f4ff; color: #222; border-radius: 12px 12px 12px 2px; align-self: flex-start; }
+        .msg.user { background: #1a3c5e; color: #fff; border-radius: 12px 12px 2px 12px; align-self: flex-end; }
+        .typing { display: flex; gap: 4px; padding: 9px 13px; background: #f0f4ff; border-radius: 12px; width: fit-content; }
+        .typing span { width: 7px; height: 7px; background: #aaa; border-radius: 50%; animation: blink 1.2s infinite; }
+        .typing span:nth-child(2) { animation-delay: .2s; }
+        .typing span:nth-child(3) { animation-delay: .4s; }
+        @keyframes blink { 0%,80%,100%{opacity:.2;} 40%{opacity:1;} }
+        .quick-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 14px 10px; }
+        .chip {
+            background: #f0f4ff; border: 1px solid #c0cff0;
+            color: #1a3c5e; font-size: 0.74rem; padding: 5px 10px;
+            border-radius: 20px; cursor: pointer; font-weight: 600;
+            transition: background .15s;
+        }
+        .chip:hover { background: #dce8ff; }
+        .chat-input-row {
+            display: flex; border-top: 1px solid #eee; padding: 10px; gap: 8px;
+        }
+        .chat-input-row input {
+            flex: 1; border: 1.5px solid #ddd; border-radius: 8px;
+            padding: 8px 10px; font-size: 0.83rem; outline: none;
+            font-family: inherit; transition: border .2s;
+        }
+        .chat-input-row input:focus { border-color: #c9a84c; }
+        .chat-send {
+            background: #1a3c5e; color: #fff; border: none;
+            border-radius: 8px; padding: 8px 14px;
+            cursor: pointer; font-size: 0.82rem; font-weight: 600;
+        }
+        .chat-send:hover { background: #1f4d7a; }
+        @media(max-width:480px){
+            .chat-window { width: 290px; }
+            .download-btns { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="#" class="logo">DR WASHIT <span>.</span></a>
+            <nav class="nav" id="mainNav">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#gallery" class="nav-link">Our Work</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="#location" class="nav-link">Contact</a></li>
+                    <li><a href="#" class="btn btn-primary open-booking-modal">Book Now</a></li>
+                </ul>
+            </nav>
+            <button class="burger" id="burgerBtn" aria-label="Toggle Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-bg">
+                <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&q=80&w=1800" alt="Dr. Washit Detailing" class="hero-img">
+                <div class="overlay"></div>
+            </div>
+            <div class="container hero-content">
+                <div class="badge-tag">DR WASHIT AUTO SPA</div>
+                <h1>Give Your Ride the<br><span class="highlight">Doctor's Detailing Touch</span></h1>
+                <p>Premium doorstep washing, detailing, and paint protection at your convenience in Greater Noida.</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn btn-primary open-booking-modal">⚡ Book via WhatsApp</a>
+                    <a href="#services" class="btn btn-outline">View Services</a>
+                </div>
+
+                <!-- ── DOWNLOAD BUTTONS ── -->
+                 <div class="download-wrap">
+    <span class="download-label">📱 Download Our App</span>
+    <div class="download-btns">
+        <a href="https://play.google.com/store/apps/details?id=com.app.buntywash" target="_blank" class="store-btn play">
+            <svg viewBox="0 0 24 24">
+                <path d="M3.18 23.76c.37.21.8.22 1.19.05l12.2-6.84-2.61-2.61-10.78 9.4zM.5 1.42C.19 1.78 0 2.28 0 2.9v18.2c0 .62.19 1.12.5 1.48l.07.07 10.2-10.19v-.24L.57 1.35l-.07.07zM20.33 10.48l-2.93-1.64-2.92 2.91 2.92 2.91 2.94-1.65c.84-.47.84-1.25-.01-1.53zM4.37.19L16.57 7.03l-2.61 2.61L3.18.24C3.55.07 3.99.08 4.37.19z" fill="#3ddc84"/>
+            </svg>
+            <div class="store-btn-text">
+                <span class="top">GET IT ON</span>
+                <span class="bot">Google Play</span>
+            </div>
+        </a> 
+        <!-- App Store Button (Updated with Apple Logo) -->
+        <a href="https://apps.apple.com/in/app/dr-washit/id6756914622" target="_blank" class="store-btn apple">
+    <svg viewBox="0 0 24 24">
+        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.21.67-2.93 1.49-.62.69-1.16 1.84-1.01 2.96 1.12.09 2.27-.58 2.95-1.39z" fill="#ffffff"/>
+    </svg>
+    <div class="store-btn-text">
+        <span class="top">Download on the</span>
+        <span class="bot">App Store</span>
+    </div>
+</a>
+
+    </div>
+</div>
+               
+                <!-- ── END DOWNLOAD BUTTONS ── -->
+
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="sec-tag">ABOUT US</span>
+                    <h2>Why Choose Dr. Washit?</h2>
+                    <div class="sec-rule"></div>
+                    <p>We redefine professional auto-care with top-tier convenience and unmatched detailing precision.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon">💧</div>
+                        <h3>Soft Water Tech</h3>
+                        <p>We wash cars using only treated soft water to prevent hard mineral spots and preserve your vehicle's paint gloss.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🏠</div>
+                        <h3>Doorstep Setup</h3>
+                        <p>No waiting in service station queues. Our fully equipped mobile vans come right to your home or office.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">✨</div>
+                        <h3>Premium Products</h3>
+                        <p>We use pH-neutral car shampoos, imported clay bars, high-grade waxes, and fresh scratch-free microfiber towels.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="sec-tag">SERVICES</span>
+                    <h2>Our Detailing Packages</h2>
+                    <div class="sec-rule"></div>
+                    <p>Select from our range of services tailored to keep your vehicle looking showroom-fresh.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🚿</div>
+                        <h3>Basic (Exterior + Interior)</h3>
+                        <p class="service-desc">Complete exterior refresh & interior spruce-up.</p>
+                        <ul class="service-features">
+                            <li>Pressure Foam Wash & Dry</li>
+                            <li>Tire Dressing & Rim Polish</li>
+                            <li>Interior Footmat Cleaning & Vaccuming</li>
+                            <li>Dashboard Polish</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🧹</div>
+                        <h3>Deep Cleaning</h3>
+                        <p class="service-desc">Interior detailing and cabin hygiene restoration.</p>
+                        <ul class="service-features">
+                            <li>Full Exterior And Interior Wash & Clean</li>
+                            <li>Engine Bay Clean</li>
+                            <li>Seat Cleaning</li>
+                            <li>Dashboard Cleaning</li>
+                            <li>Boot Cleaning</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">✨</div>
+                        <h3>Rubbing And Polish</h3>
+                        <p class="service-desc">Full exterior restoration and paint correction.</p>
+                        <ul class="service-features">
+                            <li>3M Material Used</li>
+                            <li>1-Step Machine Polish & Wax</li>
+                            <li>Fine Scratch & Swirl Reduction</li>
+                            <li>Glass Water-Spot Removal</li>
+                        </ul>
+                    </div>
+                    <div class="service-card featured">
+                        <div class="service-badge">Most Popular</div>
+                        <div class="service-icon">💎</div>
+                        <h3>Dry Cleaning</h3>
+                        <p class="service-desc">Ultimate gloss and chemical paint protection shield.</p>
+                        <ul class="service-features">
+                            <li>Seat And Carpet Clean</li>
+                            <li>Roof Lining And Dashboard Cleaning</li>
+                            <li>Door Panel And AC Vents Cleaning</li>
+                            <li>Trunk/Boot Cleaning</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">💸</div>
+                        <h3>Monthly Plan</h3>
+                        <p class="service-desc">Your Monthly Plan IS Here.</p>
+                        <ul class="service-features">
+                            <li>4 Times Wash In A Month</li>
+                            <li>8 Times Wash In A Month</li>
+                            <li>12 Times Wash In A Month</li>
+                            <li>Free Add Ones On Every Wash</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🏍️</div>
+                        <h3>Premium Bike Spa</h3>
+                        <p class="service-desc">Specialized detailing for two-wheelers.</p>
+                        <ul class="service-features">
+                            <li>Foam Washing & Chain Cleaning</li>
+                            <li>Chain Degreasing & Wax Lube</li>
+                            <li>Engine Painting & Metal Polishing</li>
+                            <li>Matte/Gloss Tank Film Wrapping</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section id="gallery" class="gallery section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="sec-tag">GALLERY</span>
+                    <h2>Dr Washit Shine</h2>
+                    <div class="sec-rule"></div>
+                    <p>Real results from our premium detailing jobs on cars and superbikes.</p>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=800" alt="Ceramic Polish">
+                        <div class="gallery-overlay"><h4>Ceramic Glaze Polish</h4></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800" alt="Sports Car Wash">
+                        <div class="gallery-overlay"><h4>Signature Foam Wash</h4></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=800" alt="Car Detailing">
+                        <div class="gallery-overlay"><h4>Interior Deep Clean</h4></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=800" alt="Bike Spa">
+                        <div class="gallery-overlay"><h4>Superbike Spa & Polish</h4></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80&w=800" alt="SUV Detailing">
+                        <div class="gallery-overlay"><h4>Paint Correction Treatment</h4></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="testimonials section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="sec-tag">TESTIMONIALS</span>
+                    <h2>Rated 5.0 ⭐ by Customers</h2>
+                    <div class="sec-rule"></div>
+                    <p>See why car owners in Greater Noida trust Dr. Washit for doorstep detailing.</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">S</div>
+                            <div class="reviewer-info">
+                                <h3>Sandeep Kumar</h3>
+                                <div class="stars">★★★★★</div>
+                                <span class="review-date">1 week ago</span>
+                            </div>
+                        </div>
+                        <p class="review-text">"Got my Harrier's ceramic coating done right at my home in Greater Noida. The level of detail Dr. Washit team puts in is absolute class. The paint is smooth and shiny!"</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar" style="background:#e91e63;">P</div>
+                            <div class="reviewer-info">
+                                <h3>Priya Sharma</h3>
+                                <div class="stars">★★★★★</div>
+                                <span class="review-date">2 weeks ago</span>
+                            </div>
+                        </div>
+                        <p class="review-text">"Booked their Deep Cabin Spa. They deep-cleaned all the coffee stains from my upholstery and sanitized the AC vents. Prompt and highly professional service."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar" style="background:#2196f3;">R</div>
+                            <div class="reviewer-info">
+                                <h3>Rahul Reddy</h3>
+                                <div class="stars">★★★★★</div>
+                                <span class="review-date">3 days ago</span>
+                            </div>
+                        </div>
+                        <p class="review-text">"The soft water foaming is amazing. No hard water stains left behind. The doorstep coordinate tracking made it super easy to direct their mobile van to my location."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location -->
+        <section id="location" class="location section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="sec-tag">OUTLET LOCATION</span>
+                    <h2>Visit Our Detail Studio</h2>
+                    <div class="sec-rule"></div>
+                    <p>Drop by our detailing hub or book a doorstep service van.</p>
+                </div>
+                <div class="location-content">
+                    <div class="outlet-info">
+                        <h3>Dr Washit Greater Noida</h3>
+                        <p><strong>Studio Address:</strong> B - 291, Sector - Omicron 3, Greater Noida, UP, 201310</p>
+                        <p><strong>Operational Hours:</strong> 6:00 AM - 8:00 PM (Everyday)</p>
+                        <p><strong>Helpdesk:</strong> +91 88600 00850</p>
+                        <a href="https://maps.google.com/?q=B+-+291,+Sector+-+Omicron+3,+Greater+Noida" target="_blank" class="btn btn-outline">🗺️ Open in Google Maps</a>
+                    </div>
+                    <div class="map-wrapper">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3508.824240751912!2d77.51862597629555!3d28.48483759089535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390c1f51179fb753%3A0xe55fe09366e6b5d9!2sOmicron%20III%2C%20Greater%20Noida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1718873000000!5m2!1sen!2sin"
+                            width="100%" height="320" style="border:0;border-radius:12px;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h3>DR WASHIT<span>.</span></h3>
+                <p>Bringing showroom elegance directly to your doorstep. Premium car and bike detailing studio in Greater Noida.</p>
+            </div>
+            <div class="footer-contacts">
+                <h4>Get In Touch</h4>
+                <p>📞 <a href="tel:+918510002780">+91 85 1000 2780</a></p>
+                <p>✉️ <a href="mailto:info@drwashit.com">info@drwashit.com</a></p>
+                <p>📍 B - 291, Sector - Omicron 3, Greater Noida</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#about">About Detailing</a></li>
+                    <li><a href="#services">Our Packages</a></li>
+                    <li><a href="#gallery">Our Showcase</a></li>
+                    <li><a href="#" class="open-booking-modal">WhatsApp Booking</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dr. Washit. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn" aria-label="Close Booking Modal">&times;</button>
+            <h2>Book Detailing Service</h2>
+            <p>Enter your details. We will fetch your live location link for doorstep service and send the book request to WhatsApp!</p>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="custName">Your Name</label>
+                    <input type="text" id="custName" name="custName" required placeholder="e.g. Khushi Singh">
+                </div>
+                <div class="form-group">
+                    <label for="custPhone">Phone Number</label>
+                    <input type="tel" id="custPhone" name="custPhone" required placeholder="e.g. 7078xxxxxx" pattern="[0-9]{10}" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label for="custAddress">Doorstep Address</label>
+                    <div class="location-group">
+                        <input type="text" id="custAddress" name="custAddress" required placeholder="e.g. Flat 101, Block B, Sector Omicron 3">
+                        <button type="button" id="detectLocationBtn" class="location-btn">📍 Detect GPS</button>
+                    </div>
+                    <input type="hidden" id="gpsCoordinateLink" name="gpsCoordinateLink">
+                    <div id="locationStatus" class="location-status"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="preferredDate">Preferred Date</label>
+                        <input type="date" id="preferredDate" name="preferredDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preferredTime">Preferred Time</label>
+                        <select id="preferredTime" name="preferredTime" required>
+                            <option value="">-- Select Time Slot --</option>
+                            <option value="9:00 AM - 11:00 AM">9:00 AM - 11:00 AM</option>
+                            <option value="11:00 AM - 1:00 PM">11:00 AM - 1:00 PM</option>
+                            <option value="2:00 PM - 4:00 PM">2:00 PM - 4:00 PM</option>
+                            <option value="4:00 PM - 6:00 PM">4:00 PM - 6:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicleType">Vehicle Type</label>
+                        <select id="vehicleType" name="vehicleType" required>
+                            <option value="">-- Select --</option>
+                            <option value="Car">Car (Hatchback/Sedan)</option>
+                            <option value="SUV">SUV (Large Car)</option>
+                            <option value="Bike">Motorcycle</option>
+                            <option value="Scooter">Scooter</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleModel">Vehicle Model</label>
+                        <input type="text" id="vehicleModel" name="vehicleModel" required placeholder="e.g. Creta, Swift, Classic 350">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="serviceType">Detailing Package</label>
+                    <select id="serviceType" name="serviceType" required>
+                        <option value="">-- Select a Service --</option>
+                        <option value="Express Glow Wash">Express Glow Wash</option>
+                        <option value="Deep Cabin Spa">Deep Cabin Spa</option>
+                        <option value="Signature Detailing">Signature Detailing</option>
+                        <option value="9H Ceramic Coating">9H Ceramic Coating</option>
+                        <option value="TPU PPF Wrap">TPU PPF Wrap</option>
+                        <option value="Premium Bike Spa">Premium Bike Spa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bookingNotes">Additional Notes (Optional)</label>
+                    <textarea id="bookingNotes" name="bookingNotes" rows="2" placeholder="Any specific requirements or instructions..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">🚀 Send Booking Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ── AI CHATBOT ── -->
+    <div id="chatbot">
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="chat-avatar">W</div>
+                <div>
+                    <h4>Dr. Washit Assistant</h4>
+                    <p>Online · Ask me anything!</p>
+                </div>
+            </div>
+            <div class="chat-msgs" id="chatMsgs">
+                <div class="msg bot">Hi! 👋 Welcome to Dr. Washit! I can help you with services, pricing, and bookings. What would you like to know?</div>
+            </div>
+            <div class="quick-chips" id="quickChips">
+                <span class="chip" onclick="sendChip('What services do you offer?')">Services</span>
+                <span class="chip" onclick="sendChip('How do I book?')">Booking</span>
+                <span class="chip" onclick="sendChip('What are your timings?')">Timings</span>
+                <span class="chip" onclick="sendChip('What is the price?')">Pricing</span>
+            </div>
+            <div class="chat-input-row">
+                <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="if(event.key==='Enter')sendChatMsg()">
+                <button class="chat-send" onclick="sendChatMsg()">Send</button>
+            </div>
+        </div>
+        <button class="chat-toggle" onclick="toggleChat()" title="Chat with us">
+            <div class="chat-badge" id="chatBadge">1</div>
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+        </button>
+    </div>
+    <!-- ── END CHATBOT ── -->
+
+    <script src="script.js"></script>
+
+    <!-- ── CHATBOT SCRIPT ── -->
+    <script>
+    function toggleChat(){
+        var w=document.getElementById('chatWindow');
+        w.classList.toggle('open');
+        document.getElementById('chatBadge').style.display='none';
+    }
+    function sendChip(text){
+        document.getElementById('chatInput').value=text;
+        document.getElementById('quickChips').style.display='none';
+        sendChatMsg();
+    }
+    async function sendChatMsg(){
+        var inp=document.getElementById('chatInput');
+        var text=inp.value.trim();
+        if(!text)return;
+        inp.value='';
+        addChatMsg(text,'user');
+        var t=addTyping();
+        try{
+            var res=await fetch('https://api.anthropic.com/v1/messages',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    model:'claude-sonnet-4-6',
+                    max_tokens:1000,
+                    system:`You are a friendly customer support assistant for Dr. Washit, a premium doorstep car wash and detailing service in Greater Noida, India. Answer questions about services, pricing, booking, and timings. Be warm, concise, and helpful. Keep replies to 2-3 sentences max. Always end with an offer to help further or suggest booking.
+
+Business info:
+- Services: Basic Wash (Exterior+Interior), Deep Cleaning, Rubbing & Polish, Dry Cleaning, Monthly Plan (4/8/12 washes), Premium Bike Spa
+- Location: B-291, Sector Omicron 3, Greater Noida, UP 201310
+- Timings: 6:00 AM – 8:00 PM, every day
+- Phone: +91 88600 00850 | +91 85 1000 2780
+- Email: info@drwashit.com
+- Booking: Via WhatsApp or Book Now button on website
+- USPs: Soft water tech, pH-neutral products, 3M materials, doorstep mobile van service`,
+                    messages:[{role:'user',content:text}]
+                })
+            });
+            var data=await res.json();
+            t.remove();
+            var reply=(data.content&&data.content[0]&&data.content[0].text)||'Sorry, please call us at +91 88600 00850 for help!';
+            addChatMsg(reply,'bot');
+        }catch(e){
+            t.remove();
+            addChatMsg('Sorry, something went wrong! Please call +91 88600 00850 or WhatsApp us to book. 😊','bot');
+        }
+    }
+    function addChatMsg(text,type){
+        var box=document.getElementById('chatMsgs');
+        var d=document.createElement('div');
+        d.className='msg '+type;
+        d.textContent=text;
+        box.appendChild(d);
+        box.scrollTop=box.scrollHeight;
+        return d;
+    }
+    function addTyping(){
+        var box=document.getElementById('chatMsgs');
+        var d=document.createElement('div');
+        d.className='typing';
+        d.innerHTML='<span></span><span></span><span></span>';
+        box.appendChild(d);
+        box.scrollTop=box.scrollHeight;
+        return d;
+    }
+    </script>
+    <!-- ── END CHATBOT SCRIPT ── -->
+
+</body>
+</html>
