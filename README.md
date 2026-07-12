@@ -46,7 +46,7 @@ WebDev-L1-LandingPage/
 
 Website:
 
-https://akash-drwash.netlify.app/
+https://khushi-drwash.netlify.app/
 
 
 📱 Responsive Design
