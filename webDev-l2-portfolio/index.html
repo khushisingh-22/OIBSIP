@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khushi Singh - MERN Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Syne:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #60a5fa;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .avatar {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            animation: slideInDown 0.8s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #e2e8f0 0%, #60a5fa 50%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInUp 0.8s ease 0.1s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            animation: slideInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: #cbd5e1;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            animation: slideInUp 0.8s ease 0.3s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 0.8s ease 0.4s both;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            color: white;
+            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(96, 165, 250, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #60a5fa;
+            border: 2px solid #60a5fa;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(96, 165, 250, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #e2e8f0 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #cbd5e1;
+        }
+
+        .info-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+        }
+
+        /* Skills Section */
+        #skills {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.5) 100%);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(30, 41, 59, 0.6);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(96, 165, 250, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: #60a5fa;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .skill-category h3:hover {
+            color: #a78bfa;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(96, 165, 250, 0.3);
+            border-color: rgba(96, 165, 250, 0.6);
+        }
+
+        /* Projects Section */
+        #projects {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(96, 165, 250, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.2);
+        }
+
+        .project-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .project-card h3 {
+            color: #e2e8f0;
+            font-size: 1.3rem;
+            margin-top: 0.5rem;
+        }
+
+        .project-desc {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-badge {
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+            padding: 0.35rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-link {
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .project-link:hover {
+            border-bottom-color: #60a5fa;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.5) 100%);
+            text-align: center;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-container p {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-method:hover {
+            color: #60a5fa;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(96, 165, 250, 0.15);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: rgba(96, 165, 250, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Form Styles */
+        form input,
+        form textarea {
+            padding: 0.75rem !important;
+            border: 1px solid rgba(96, 165, 250, 0.3) !important;
+            background: rgba(30, 41, 59, 0.6) !important;
+            color: #e2e8f0 !important;
+            border-radius: 8px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease !important;
+        }
+
+        form input::placeholder,
+        form textarea::placeholder {
+            color: #64748b !important;
+        }
+
+        form input:focus,
+        form textarea:focus {
+            outline: none !important;
+            border-color: rgba(96, 165, 250, 0.6) !important;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1) !important;
+            background: rgba(30, 41, 59, 0.8) !important;
+        }
+
+        form button {
+            font-size: 1rem !important;
+        }
+
+        #formMessage {
+            padding: 1rem !important;
+            border-radius: 8px !important;
+            text-align: center !important;
+            font-weight: 600 !important;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero {
+                margin-top: 70px;
+                min-height: calc(100vh - 70px);
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #a78bfa, #60a5fa);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">KS</div>
+        <ul>
+            <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#skills" class="nav-link">Skills</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="avatar">💻</div>
+            <h1>Khushi Singh</h1>
+            <p class="subtitle">MERN Stack Developer | Frontend Engineer</p>
+            <p class="hero-desc">Building responsive, production-quality UIs with React.js and React Native. Expanding full-stack capabilities with Node.js and MongoDB. Based in Greater Noida, UP.</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a <span class="highlight">frontend-focused MERN Stack Developer</span> with hands-on experience contributing to production applications. Currently, I'm an <span class="highlight">SDE Intern at Vate Software System</span>, where I've worked on Dwaari App—a live cross-platform mobile product available on Google Play Store.</p>
+                <p>My passion lies in crafting <span class="highlight">responsive, intuitive user interfaces</span> using React.js and React Native. I'm actively building my backend expertise in Node.js, Express.js, and MongoDB to deliver complete full-stack solutions. With a strong foundation in Data Structures & Algorithms (Java), I approach problems systematically and efficiently.</p>
+                <p>When I'm not coding, I'm exploring new technologies, contributing to open-source projects, or working on side projects to expand my skill set. I'm eager to grow as a developer and take on challenging projects that push my abilities.</p>
+            </div>
+            <div class="contact-info">
+                <h3 style="color: #60a5fa; margin-bottom: 1.5rem;">Quick Contact</h3>
+                <div class="info-item">
+                    <div class="info-icon">📞</div>
+                    <div>
+                        <p style="font-size: 0.9rem; color: #94a3b8;">Phone</p>
+                        <a href="tel:7078408119" style="color: #e2e8f0; text-decoration: none; font-weight: 500;">7078408119</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📧</div>
+                    <div>
+                        <p style="font-size: 0.9rem; color: #94a3b8;">Email</p>
+                        <a href="mailto:ks6637890@gmail.com" style="color: #e2e8f0; text-decoration: none; font-weight: 500;">ks6637890@gmail.com</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div>
+                        <p style="font-size: 0.9rem; color: #94a3b8;">Location</p>
+                        <p style="color: #e2e8f0; font-weight: 500;">Greater Noida, UP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Frontend</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">React.js</span>
+                    <span class="skill-tag">React Native</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">JavaScript (ES6+)</span>
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">Tailwind CSS</span>
+                    <span class="skill-tag">Bootstrap</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Backend</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Express.js</span>
+                    <span class="skill-tag">RESTful APIs</span>
+                    <span class="skill-tag">JWT Auth</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Database & BaaS</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Appwrite</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>DSA & Tools</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Java (DSA)</span>
+                    <span class="skill-tag">Git/GitHub</span>
+                    <span class="skill-tag">VS Code</span>
+                    <span class="skill-tag">Netlify</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-icon">📱</div>
+                <h3>Dwaari App</h3>
+                <p class="project-desc">Live cross-platform mobile application available on Google Play Store. Contributed to core development team implementing screens, navigation, and API integration.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">React Native</span>
+                    <span class="tech-badge">TypeScript</span>
+                    <span class="tech-badge">REST APIs</span>
+                    <span class="tech-badge">JWT Auth</span>
+                </div>
+                <p style="color: #60a5fa; font-size: 0.9rem; margin-top: 1rem; font-weight: 600;">👆 Click to view details</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">📝</div>
+                <h3>MegaBlog</h3>
+                <p class="project-desc">Full-stack blog application combining React.js frontend with Appwrite backend services. Features user authentication, dynamic content management, and responsive design.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">React.js</span>
+                    <span class="tech-badge">Tailwind CSS</span>
+                    <span class="tech-badge">Appwrite</span>
+                </div>
+                <p style="color: #60a5fa; font-size: 0.9rem; margin-top: 1rem; font-weight: 600;">👆 Click to view details</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">🚗</div>
+                <h3>Dr. Washit</h3>
+                <p class="project-desc">Responsive landing page for doorstep car wash service. Implemented GPS-based location detection, interactive booking modal, and WhatsApp integration for service requests.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">Vanilla JS</span>
+                    <span class="tech-badge">Google Maps API</span>
+                </div>
+                <p style="color: #60a5fa; font-size: 0.9rem; margin-top: 1rem; font-weight: 600;">👆 Click to view details</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">💱</div>
+                <h3>Currency Converter</h3>
+                <p class="project-desc">Real-time multi-currency conversion tool. Clean UI with instant exchange rate calculations and intuitive currency selection interface.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">React.js</span>
+                    <span class="tech-badge">Tailwind CSS</span>
+                    <span class="tech-badge">API Integration</span>
+                </div>
+                <p style="color: #60a5fa; font-size: 0.9rem; margin-top: 1rem; font-weight: 600;">👆 Click to view details</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">🔐</div>
+                <h3>Password Generator</h3>
+                <p class="project-desc">Customizable secure password generator with zero external dependencies. Allows users to configure password length and character types for enhanced security.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Vanilla JS</span>
+                </div>
+                <p style="color: #60a5fa; font-size: 0.9rem; margin-top: 1rem; font-weight: 600;">👆 Click to view details</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">⚙️</div>
+                <h3>Counter App</h3>
+                <p class="project-desc">Demonstrates core React concepts including state management, props, and event handling. Educational project showcasing React fundamentals.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">React.js</span>
+                    <span class="tech-badge">State Management</span>
+                </div>
+                <p style="color: #60a5fa; font-size: 0.9rem; margin-top: 1rem; font-weight: 600;">👆 Click to view details</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Let's Connect</h2>
+        <div class="contact-container">
+            <p>I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hello, feel free to reach out!</p>
+            
+            <div class="contact-methods">
+                <a href="mailto:ks6637890@gmail.com" class="contact-method">
+                    <span>📧</span>
+                    <span>Email</span>
+                </a>
+                <a href="tel:7078408119" class="contact-method">
+                    <span>📞</span>
+                    <span>Phone</span>
+                </a>
+            </div>
+
+            <div class="social-links">
+                <a href="https://github.com/khushi-singh" class="social-icon" title="GitHub" target="_blank" rel="noopener noreferrer">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 0.405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.002 12.002 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/khushi-singh" class="social-icon" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.731-2.004 1.438-.103.249-.129.597-.129.946v5.421h-3.554s.05-8.807 0-9.726h3.554v1.375c.427-.659 1.191-1.598 2.895-1.598 2.117 0 3.704 1.385 3.704 4.362v5.587zM5.337 5.432c-1.142 0-1.993-.857-1.993-1.925S4.195 1.582 5.337 1.582s1.993.859 1.993 1.925c0 1.068-.851 1.925-1.993 1.925zm1.676 15.02H3.66V8.726h3.353v11.726zM22.224 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.224 0z"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/khushi_singh" class="social-icon" title="Twitter" target="_blank" rel="noopener noreferrer">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75-2.63 2.07-9.42 9-5z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Khushi Singh. All rights reserved. Built with passion and code.</p>
+    </footer>
+
+    <script>
+        // Project Data
+        const projectsData = [
+            {
+                id: 1,
+                title: 'Dwaari App',
+                icon: '📱',
+                description: 'Live cross-platform mobile application available on Google Play Store. Contributed to core development team implementing screens, navigation, and API integration.',
+                fullDescription: 'Dwaari App is a production-ready mobile application that I worked on as an SDE Intern. The app includes features like NFC card read/write, QR code scanning, and SMS-based message parsing. I implemented screens and navigation using React Native CLI and TypeScript, integrated JWT authentication for secure sessions, and worked with senior developers to ensure code quality.',
+                tags: ['React Native', 'TypeScript', 'REST APIs', 'JWT Auth'],
+                github: 'https://github.com/khushi-singh/dwaari-app',
+                demo: 'https://play.google.com/store/apps/details?id=com.dwaariapp',
+                tech: 'React Native CLI, TypeScript, RESTful APIs, JWT Authentication'
+            },
+            {
+                id: 2,
+                title: 'MegaBlog',
+                icon: '📝',
+                description: 'Full-stack blog application combining React.js frontend with Appwrite backend services. Features user authentication, dynamic content management, and responsive design.',
+                fullDescription: 'MegaBlog is a complete full-stack blog platform. Users can create, edit, and delete blog posts with rich text support. The application features user authentication, database operations through Appwrite BaaS, file storage for images, and a responsive component-driven UI built with Tailwind CSS.',
+                tags: ['React.js', 'Tailwind CSS', 'Appwrite'],
+                github: 'https://github.com/khushi-singh/megablog',
+                demo: 'https://megablog-khushi.netlify.app',
+                tech: 'React.js, Tailwind CSS, Appwrite (BaaS), JavaScript'
+            },
+            {
+                id: 3,
+                title: 'Dr. Washit',
+                icon: '🚗',
+                description: 'Responsive landing page for doorstep car wash service. Implemented GPS-based location detection, interactive booking modal, and WhatsApp integration.',
+                fullDescription: 'Dr. Washit is a professional landing page for a car detailing business. It features live GPS-based location detection to auto-fill customer addresses, an interactive booking modal with dynamic service package selection, WhatsApp integration for instant request routing, Google Maps embedded for studio location, and fully responsive design with mobile-first approach.',
+                tags: ['HTML5', 'CSS3', 'Vanilla JS', 'Google Maps API'],
+                github: 'https://github.com/khushi-singh/dr-washit',
+                demo: 'https://dr-washit.netlify.app',
+                tech: 'HTML5, CSS3, JavaScript (Vanilla), Google Maps API'
+            },
+            {
+                id: 4,
+                title: 'Currency Converter',
+                icon: '💱',
+                description: 'Real-time multi-currency conversion tool. Clean UI with instant exchange rate calculations and intuitive currency selection interface.',
+                fullDescription: 'A sleek currency converter tool built with React that allows users to convert between multiple currencies in real-time. Features include instant conversion calculations, easy-to-use currency selection dropdowns, and a clean, centered UI with clear labeling.',
+                tags: ['React.js', 'Tailwind CSS', 'API Integration'],
+                github: 'https://github.com/khushi-singh/currency-converter',
+                demo: 'https://currency-converter-khushi.netlify.app',
+                tech: 'React.js, Tailwind CSS, Currency API'
+            },
+            {
+                id: 5,
+                title: 'Password Generator',
+                icon: '🔐',
+                description: 'Customizable secure password generator with zero external dependencies. Configure password length and character types for enhanced security.',
+                fullDescription: 'A powerful password generator built with pure JavaScript. Users can customize password length and select which character types to include (uppercase, lowercase, numbers, symbols). Features a copy-to-clipboard button and generates cryptographically secure passwords with zero external dependencies.',
+                tags: ['JavaScript', 'Vanilla JS'],
+                github: 'https://github.com/khushi-singh/password-generator',
+                demo: 'https://password-generator-khushi.netlify.app',
+                tech: 'Vanilla JavaScript, Zero Dependencies'
+            },
+            {
+                id: 6,
+                title: 'Counter App',
+                icon: '⚙️',
+                description: 'Demonstrates core React concepts including state management, props, and event handling. Educational project showcasing React fundamentals.',
+                fullDescription: 'A educational React project that showcases fundamental React concepts including component state using useState, props passing between components, and event handling. Perfect for learning React basics with increment, decrement, and reset functionality.',
+                tags: ['React.js', 'State Management'],
+                github: 'https://github.com/khushi-singh/counter-app',
+                demo: 'https://counter-app-khushi.netlify.app',
+                tech: 'React.js, JavaScript ES6+'
+            }
+        ];
+
+        // Modal functionality
+        function openProjectModal(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) return;
+
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="modal-close" onclick="this.closest('.modal').remove()">×</button>
+                    <div class="modal-header">
+                        <div class="modal-icon">${project.icon}</div>
+                        <h2>${project.title}</h2>
+                    </div>
+                    <p class="modal-description">${project.fullDescription}</p>
+                    <div class="modal-tech">
+                        <strong>Technologies:</strong> ${project.tech}
+                    </div>
+                    <div class="modal-tags">
+                        ${project.tags.map(tag => `<span class="tech-badge">${tag}</span>`).join('')}
+                    </div>
+                    <div class="modal-buttons">
+                        <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="text-decoration: none; display: inline-block; text-align: center;">📌 View on GitHub</a>
+                        <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="text-decoration: none; display: inline-block; text-align: center;">🚀 Live Demo</a>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+        }
+
+        // Add click handlers to project cards
+        document.querySelectorAll('.project-card').forEach((card, index) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => openProjectModal(index + 1));
+        });
+
+        // Skill filter functionality
+        const skillCategories = document.querySelectorAll('.skill-category h3');
+        skillCategories.forEach(category => {
+            category.style.cursor = 'pointer';
+            category.addEventListener('click', () => {
+                const skillsContainer = category.nextElementSibling;
+                skillsContainer.style.display = 
+                    skillsContainer.style.display === 'none' ? 'flex' : 'none';
+            });
+        });
+
+        // Contact form
+        const contactForm = document.querySelector('.contact-container');
+        if (contactForm && !contactForm.querySelector('form')) {
+            const formHTML = `
+                <form id="contactForm" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    <input type="text" placeholder="Your Name" required style="padding: 0.75rem; border: 1px solid rgba(96, 165, 250, 0.3); background: rgba(30, 41, 59, 0.6); color: #e2e8f0; border-radius: 8px; font-family: 'Poppins', sans-serif;">
+                    <input type="email" placeholder="Your Email" required style="padding: 0.75rem; border: 1px solid rgba(96, 165, 250, 0.3); background: rgba(30, 41, 59, 0.6); color: #e2e8f0; border-radius: 8px; font-family: 'Poppins', sans-serif;">
+                    <textarea placeholder="Your Message" rows="5" required style="padding: 0.75rem; border: 1px solid rgba(96, 165, 250, 0.3); background: rgba(30, 41, 59, 0.6); color: #e2e8f0; border-radius: 8px; font-family: 'Poppins', sans-serif; resize: vertical;"></textarea>
+                    <button type="submit" class="btn btn-primary" style="align-self: center; width: auto; min-width: 200px;">Send Message</button>
+                    <p id="formMessage" style="text-align: center; display: none; padding: 1rem; background: rgba(96, 165, 250, 0.2); border-radius: 8px; color: #60a5fa;"></p>
+                </form>
+            `;
+            contactForm.insertAdjacentHTML('beforeend', formHTML);
+        }
+
+        // Handle contact form submission
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formMessage = document.getElementById('formMessage');
+                    formMessage.textContent = '✅ Message sent successfully! I\'ll get back to you soon.';
+                    formMessage.style.display = 'block';
+                    formMessage.style.color = '#4ade80';
+                    form.reset();
+                    setTimeout(() => {
+                        formMessage.style.display = 'none';
+                    }, 3000);
+                });
+            }
+        });
+
+        // Copy to clipboard functionality
+        document.querySelectorAll('[href^="mailto:"], [href^="tel:"]').forEach(link => {
+            link.style.cursor = 'pointer';
+            link.addEventListener('click', (e) => {
+                const text = link.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = link.textContent;
+                    link.textContent = 'Copied! ✓';
+                    link.style.color = '#4ade80';
+                    setTimeout(() => {
+                        link.textContent = originalText;
+                        link.style.color = '#e2e8f0';
+                    }, 2000);
+                });
+            });
+        });
+
+        // Smooth navigation and scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Smooth navigation highlighting
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card, .skill-category').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+
+        // Add fadeInUp keyframe
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 2000;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+                animation: fadeIn 0.3s ease;
+            }
+
+            .modal.active {
+                display: flex;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+
+            .modal-content {
+                background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                border: 1px solid rgba(96, 165, 250, 0.3);
+                border-radius: 12px;
+                padding: 2rem;
+                max-width: 600px;
+                max-height: 80vh;
+                overflow-y: auto;
+                position: relative;
+                animation: slideUp 0.3s ease;
+            }
+
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .modal-close {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: none;
+                border: none;
+                font-size: 2rem;
+                color: #cbd5e1;
+                cursor: pointer;
+                transition: color 0.3s ease;
+            }
+
+            .modal-close:hover {
+                color: #60a5fa;
+            }
+
+            .modal-header {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .modal-icon {
+                font-size: 3rem;
+            }
+
+            .modal-header h2 {
+                color: #e2e8f0;
+                font-size: 1.8rem;
+                margin: 0;
+            }
+
+            .modal-description {
+                color: #cbd5e1;
+                line-height: 1.8;
+                margin-bottom: 1.5rem;
+                font-size: 1rem;
+            }
+
+            .modal-tech {
+                color: #cbd5e1;
+                margin-bottom: 1.5rem;
+                padding: 1rem;
+                background: rgba(96, 165, 250, 0.1);
+                border-left: 3px solid #60a5fa;
+                border-radius: 4px;
+            }
+
+            .modal-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                margin-bottom: 2rem;
+            }
+
+            .modal-buttons {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .modal-buttons .btn {
+                flex: 1;
+                min-width: 150px;
+                cursor: pointer;
+            }
+
+            input, textarea {
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            input:focus, textarea:focus {
+                outline: none;
+                border-color: rgba(96, 165, 250, 0.6);
+                box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+            }
+
+            @media (max-width: 600px) {
+                .modal-content {
+                    padding: 1.5rem;
+                    max-width: 95vw;
+                }
+
+                .modal-buttons {
+                    flex-direction: column;
+                }
+
+                .modal-buttons .btn {
+                    width: 100%;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
