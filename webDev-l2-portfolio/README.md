@@ -2,6 +2,9 @@
 
 A modern and responsive personal portfolio website built using **HTML, CSS, and JavaScript**. This portfolio showcases my skills, projects, education, and contact information in a clean and interactive user interface.
 
+
+##live demo-https://phenomenal-hotteok-63cbdf.netlify.app/
+
 ## 🚀 Features
 
 - Responsive Design (Mobile, Tablet & Desktop)
